@@ -1,59 +1,63 @@
 function sherlock(n){
 	// while constraints have not been met, increment counter
-	var bool = [];
-	var boolCounts = {};
-	boolCounts.five = n;
-	boolCounts.three= 0;
-	boolCounts.roll = 0;
-	for (var i=0; i<n;i++){
-		bool.push(true);
-	}
-	
-	var count = 1;
-	// console.log(bool);
-	while( boolCounts.roll < 3 ){
-		if (boolCounts.five % 3 === 0 && boolCounts.three % 5 ===0){
-			// console.log('DING DING DING');
-			boolCounts.roll = 4;
-			// console.log('role changed');
-			
-		}
-		if(boolCounts.roll < 3){
-			for(var j=0;j<bool.length;j++){
-				if(count % Math.pow(2,(j)) === 0){
-					bool[j] = !bool[j];
-					if(bool[j] ===true){
-						boolCounts.five++;
-						boolCounts.three--;
-					}else{
-						boolCounts.three++;
-						boolCounts.five--;
-					}
-					if( (bool.length-1) == j ){
-						boolCounts.roll++;
-						// console.log('role incremented');
-						// console.log(bool[bool.length-1]);
-					}
+	var bool = {
+		
+		five: n,
+		three:0,
+		roll:0,
+		j:0
+	};
+	function digitChange(object,count){
+		for(var j=0;j<bool.digits.length;j++){
+			if(count % Math.pow(2,(j)) === 0){
+				bool.digits[j] = !bool.digits[j];
+				if(bool.digits[j] ===true){
+					bool.five++;
+					bool.three--;
+				}else{
+					bool.three++;
+					bool.five--;
+				}
+				if( (bool.digits.length-1) == j ){
+					bool.roll++;
+					console.log('role incremented');
+					// console.log(bool[bool.length-1]);
 				}
 			}
 		}
-		// console.log(boolCounts);
+	}
+
+	
+	
+	bool.digits = Array.apply(null, new Array(n)).map(function(){return true});
+
+	var count = 1;
+	
+	while( bool.roll < 3 ){
+		if (bool.five % 3 === 0 && bool.three % 5 ===0){
+						bool.roll = 4;
+		}
+		if(bool.roll < 3){
+			
+			digitChange(bool, count);
+		}
+		// console.log(bool);
 	
 		count++;
 	}
-	if(boolCounts.roll == 3){
+	if(bool.roll == 3){
 		console.log(-1);
 	}
-	if(boolCounts.roll == 4){
-		var boolRes = bool.map(function(b, i){
+	if(bool.roll == 4){
+		bool.res = bool.digits.map(function(b, i){
 			if(b){
 				return 5;
 			}else{
 				return 3;
 			}
 		});
-		console.log(eval(boolRes.join("")));
+		console.log(eval(bool.res.reverse().join("")));
 	}
 	
 }
-sherlock(4);
+sherlock(8);
