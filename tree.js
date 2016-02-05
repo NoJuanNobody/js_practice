@@ -1,12 +1,16 @@
 function growth(n){
 	var height = 1;
-
-	console.log(height);
-	var a = Array.apply(null, new Array(n)).map(function(){return 0});
-	console.log(a);
+	if(n !== 0){
+		for(var i=0; i<n; i++){
+			if(i%2===0){
+				height = 2*height;
+			}else{
+				height+=1;
+			}
+		}
+	}
+console.log(height);
 }
-growth(1);
-growth(2);
-growth(3);
-// I need to create some sort of loop
-
+for(var i=0; i<10;i++){
+	growth(i);
+}
